@@ -3,16 +3,24 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meal});
+  const MealsScreen(
+      {super.key,
+      this.title,
+      required this.meal,
+      required this.onToggleFavorite});
 
-  final String title;
+  final String? title;
   final List<Meal> meal;
+  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
         itemCount: meal.length,
-        itemBuilder: (ctx, index) => MealItem(meal: meal[index]));
+        itemBuilder: (ctx, index) => MealItem(
+              meal: meal[index],
+              onToggleFavorite: onToggleFavorite,
+            ));
 
     if (meal.isEmpty) {
       content = Center(
@@ -20,7 +28,7 @@ class MealsScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Uh oh...Nothong here',
+              'Uh oh...Nothing here',
               style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
@@ -38,9 +46,13 @@ class MealsScreen extends StatelessWidget {
         ),
       );
     }
+
+    if (title == null) {
+      return content;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );
