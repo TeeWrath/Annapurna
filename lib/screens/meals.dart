@@ -39,7 +39,7 @@ class MealsScreen extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meals'),
+        title: Text(title),
       ),
       body: content,
     );
