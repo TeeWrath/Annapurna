@@ -1,6 +1,5 @@
-# Meals App Flutter
-
-A flutter application that gives you food options
+# Meals App - Flutter
+A flutter application that gives you food options, somewhat copy of Food delivery apps
 
 
 # Build Instructions
