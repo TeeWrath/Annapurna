@@ -1,6 +1,7 @@
 # Meals App - Flutter
-A flutter application that gives you food options, somewhat copy of Food delivery apps.
-Made to learn State Management
+A flutter application that gives you food options, somewhat like Food delivery apps. <br>
+Created while learning State Management - Riverpod <br>
+and to learn flutter animations
 
 
 # Build Instructions
