@@ -28,12 +28,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   Map<Filter, bool> _selectedFilters = kInitialFilters;
 
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
-
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
