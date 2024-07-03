@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meals/screens/tabs.dart';
+import 'package:meals/const.dart';
+// import 'package:meals/screens/tabs.dart';
 
 final theme = ThemeData(
   useMaterial3: true,
@@ -25,7 +26,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: const TabsScreen(),
+      initialRoute: Routes.tabs,
+      routes: RouteMap.routes,
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );
   }

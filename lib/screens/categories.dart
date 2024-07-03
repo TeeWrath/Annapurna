@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/providers/filters_provider.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({super.key, required this.availableMeals});
+class CategoriesScreen extends ConsumerStatefulWidget {
+  const CategoriesScreen({super.key});
 
-  final List<Meal> availableMeals;
+  // final List<Meal> availableMeals;
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  ConsumerState<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen>
+class _CategoriesScreenState extends ConsumerState<CategoriesScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
@@ -36,8 +38,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.dispose();
   }
 
-  void selectCategory(BuildContext context, Category category) {
-    final filteredMeals = widget.availableMeals
+  void selectCategory(BuildContext context, Category category, List<Meal> availableMeals) {
+    final List<Meal> filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
     Navigator.push(
@@ -51,6 +53,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
+    final availableMeals = ref.watch(filteredMealsProvider);
     return AnimatedBuilder(
         animation: _animationController,
         child: GridView(
@@ -65,7 +68,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
               CategoryGridItem(
                 category: category,
                 onSelectCategory: () {
-                  selectCategory(context, category);
+                  selectCategory(context, category, availableMeals);
                 },
               )
           ],
