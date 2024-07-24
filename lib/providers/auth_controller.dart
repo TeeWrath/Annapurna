@@ -34,6 +34,29 @@ class AuthController extends StateNotifier<bool> {
     }
     return res;
   }
+
+  Future<String> loginUser(
+      {required String email, required String password}) async {
+    setLoading(true);
+    String res = 'some error occured';
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        await auth.signInWithEmailAndPassword(email: email, password: password);
+      }
+      res = 'login successful';
+    } on FirebaseAuthException catch (err) {
+      if (err.code == 'user-not-found') {
+        res = 'User not found for this email';
+      } else if (err.code == 'wrong-password') {
+        res = 'Entered password is wrong';
+      }
+    } catch (e) {
+      res = e.toString();
+    } finally {
+      setLoading(false);
+    }
+    return res;
+  }
 }
 
 final authProvider = StateNotifierProvider<AuthController, bool>((ref) {

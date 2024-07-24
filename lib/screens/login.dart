@@ -1,43 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/auth_controller.dart';
-import 'package:meals/screens/login.dart';
+import 'package:meals/screens/signup.dart';
 import 'package:meals/screens/tabs.dart';
 
-class SignupScreen extends ConsumerStatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  ConsumerState<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends ConsumerState<SignupScreen> {
-  final TextEditingController userNameController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    userNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
 
-  void signUpUser() async {
+  void loginUser() async {
     final auth = ref.read(authProvider.notifier);
-
-    String res = await auth.signUp(
-        email: emailController.text,
-        password: passwordController.text,
-        userName: userNameController.text);
-
-    if (res != 'signup successful') {
+    var res = await auth.loginUser(
+        email: emailController.text, password: passwordController.text);
+    if (res != 'login successful') {
+      // print(res);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
     }
+    // var  userName = await _firestore.collection('user').doc(res[1]);
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const TabsScreen()));
+        MaterialPageRoute(builder: (ctx) => const TabsScreen()));
   }
 
   @override
@@ -60,55 +56,26 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               children: [
                 // Heading
                 const Text(
-                  'Create account',
+                  'Welcome back!',
                   style: TextStyle(fontSize: 40),
                 ),
 
                 // Sub-Heading
-                const Text(
-                  'Create a new account',
-                  style: TextStyle(fontSize: 16),
-                ),
+                const Text('Login to your account',
+                    style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 40),
 
                 // Username Text-box
-                const Text('Username'),
-                const SizedBox(height: 4),
-                TextField(
-                  controller: userNameController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
-                      child: Icon(Icons.person),
-                    ),
-                    hintText: 'Username',
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-
-                // Email text-box
-                const Text('Email'),
+                const Text('Username / Email', style: TextStyle(fontSize: 20)),
                 const SizedBox(height: 4),
                 TextField(
                   controller: emailController,
                   decoration: const InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Icon(Icons.mail),
+                      child: Icon(Icons.person),
                     ),
-                    hintText: 'Email',
+                    hintText: 'Username / Email',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
@@ -126,11 +93,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 const SizedBox(height: 25),
 
                 // Password text-box
-                const Text('Password'),
+                const Text('Password', style: TextStyle(fontSize: 20)),
                 const SizedBox(height: 4),
                 TextField(
-                  controller: passwordController,
                   obscureText: true,
+                  controller: passwordController,
                   decoration: const InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(15.0),
@@ -153,11 +120,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 ),
                 const SizedBox(height: 40),
 
-                // Signup Button
+                // Login Button
                 SizedBox(
                   width: double.infinity,
                   child: InkWell(
-                    onTap: signUpUser,
+                    onTap: loginUser,
                     focusColor: Theme.of(context).colorScheme.primary,
                     highlightColor: Theme.of(context).colorScheme.primary,
                     customBorder: RoundedRectangleBorder(
@@ -174,7 +141,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                                 color: Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(15)),
                             child: const Center(
-                              child: Text('Sign up'),
+                              child:
+                                  Text('Login', style: TextStyle(fontSize: 22)),
                             ),
                           ),
                   ),
@@ -186,30 +154,23 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Already have an account?',
-                      ),
+                      const Text('Don\'t have an account?'),
                       ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (ctx) => const LoginScreen()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              padding: const EdgeInsets.all(0),
-                              shadowColor: Colors.transparent),
-                          child: Text('Login',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withGreen(160),
-                                  )))
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignupScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            padding: EdgeInsets.all(0),
+                            shadowColor: Colors.transparent),
+                        child: const Text(
+                          'Signup',
+                        ),
+                      )
                     ],
                   ),
                 ),
