@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals/const.dart';
+import 'firebase_options.dart';
 // import 'package:meals/screens/tabs.dart';
 
 final theme = ThemeData(
@@ -13,8 +15,9 @@ final theme = ThemeData(
   textTheme: GoogleFonts.latoTextTheme(),
 );
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: App()));
 }
 
@@ -26,7 +29,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      initialRoute: Routes.tabs,
+      initialRoute: Routes.signup,
       routes: RouteMap.routes,
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );
