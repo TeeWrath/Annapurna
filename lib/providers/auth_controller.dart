@@ -9,6 +9,15 @@ class AuthController extends StateNotifier<bool> {
     state = load;
   }
 
+  Future<bool> checkIfRegistered(String email) async {
+    bool res = false;
+    try {
+      if (email.isNotEmpty) {
+        await auth.;
+      }
+    } catch (e) {}
+  }
+
   Future<String> signUp(
       {required String userName,
       required String email,

@@ -10,7 +10,7 @@ final theme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 131, 57, 0),
+    seedColor: const Color.fromARGB(255, 241, 101, 41),
   ),
   textTheme: GoogleFonts.latoTextTheme(),
 );
@@ -29,7 +29,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      initialRoute: Routes.login,
+      initialRoute: Routes.tabs,
       routes: RouteMap.routes,
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );
