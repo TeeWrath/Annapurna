@@ -191,8 +191,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
+                            Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (ctx) => const LoginScreen()));
                           },
