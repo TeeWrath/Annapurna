@@ -167,8 +167,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             backgroundColor: Colors.transparent,
                             padding: EdgeInsets.all(0),
                             shadowColor: Colors.transparent),
-                        child: const Text(
+                        child: Text(
                           'Signup',
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withGreen(160),
+                                  ),
                         ),
                       )
                     ],

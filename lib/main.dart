@@ -29,7 +29,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      initialRoute: Routes.signup,
+      initialRoute: Routes.login,
       routes: RouteMap.routes,
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );

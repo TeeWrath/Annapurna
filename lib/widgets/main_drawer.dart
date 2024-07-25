@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/providers/auth_controller.dart';
+import 'package:meals/screens/login.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
 
   final void Function(String identifier) onSelectScreen;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final auth = ref.read(authProvider.notifier);
     return Drawer(
       child: Column(
         children: [
@@ -46,12 +50,12 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(
               Icons.restaurant,
               size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Meals',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 24,
                   ),
             ),
@@ -63,12 +67,12 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(
               Icons.settings,
               size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Filters',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 24,
                   ),
             ),
@@ -76,6 +80,23 @@ class MainDrawer extends StatelessWidget {
               onSelectScreen('filters');
             },
           ),
+          const Divider(
+            thickness: 1,
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton.icon(
+                onPressed: () async {
+                  auth.logOut();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => const LoginScreen()));
+                },
+                icon: const Icon(
+                  Icons.logout_rounded,
+                  size: 18,
+                ),
+                label: const Text('Log out')),
+          )
         ],
       ),
     );

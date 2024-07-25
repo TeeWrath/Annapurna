@@ -57,6 +57,10 @@ class AuthController extends StateNotifier<bool> {
     }
     return res;
   }
+
+  void logOut() async {
+    await auth.signOut();
+  }
 }
 
 final authProvider = StateNotifierProvider<AuthController, bool>((ref) {
