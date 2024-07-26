@@ -18,6 +18,17 @@ class AuthController extends StateNotifier<bool> {
     } catch (e) {}
   }
 
+  Future<bool> sendOtp(String number) async {
+    bool res = false;
+    try{
+      if(number.isNotEmpty){
+        await auth.verifyPhoneNumber(verificationCompleted: verificationCompleted, verificationFailed: verificationFailed, codeSent: codeSent, codeAutoRetrievalTimeout: codeAutoRetrievalTimeout)
+      }
+    }catch(e){
+        debugPrint('$e');
+      }
+  }
+
   Future<String> signUp(
       {required String userName,
       required String email,
