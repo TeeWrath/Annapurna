@@ -9,34 +9,32 @@ class AuthController extends StateNotifier<bool> {
     state = load;
   }
 
-  Future<bool> checkIfRegistered(String email) async {
-    bool res = false;
-    try {
-      if (email.isNotEmpty) {
-        await auth.;
-      }
-    } catch (e) {}
-  }
+  // Future<bool> checkIfRegistered(String email) async {
+  //   bool res = false;
+  //   try {
+  //     if (email.isNotEmpty) {
+  //       await auth.;
+  //     }
+  //   } catch (e) {}
+  // }
 
-  Future<bool> sendOtp(String number) async {
-    bool res = false;
-    try{
-      if(number.isNotEmpty){
-        await auth.verifyPhoneNumber(verificationCompleted: verificationCompleted, verificationFailed: verificationFailed, codeSent: codeSent, codeAutoRetrievalTimeout: codeAutoRetrievalTimeout)
-      }
-    }catch(e){
-        debugPrint('$e');
-      }
-  }
+  // Future<bool> sendOtp(String number) async {
+  //   bool res = false;
+  //   try{
+  //     if(number.isNotEmpty){
+  //       await auth.verifyPhoneNumber(verificationCompleted: verificationCompleted, verificationFailed: verificationFailed, codeSent: codeSent, codeAutoRetrievalTimeout: codeAutoRetrievalTimeout)
+  //     }
+  //   }catch(e){
+  //       debugPrint('$e');
+  //     }
+  // }
 
   Future<String> signUp(
-      {required String userName,
-      required String email,
-      required String password}) async {
+      {required String email, required String password}) async {
     setLoading(true);
     String res = 'some error occured';
     try {
-      if (email.isNotEmpty || userName.isNotEmpty || password.isNotEmpty) {
+      if (email.isNotEmpty || password.isNotEmpty) {
         await auth.createUserWithEmailAndPassword(
             email: email, password: password);
         res = 'signup successful';

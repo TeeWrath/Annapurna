@@ -38,7 +38,8 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen>
     super.dispose();
   }
 
-  void selectCategory(BuildContext context, Category category, List<Meal> availableMeals) {
+  void selectCategory(
+      BuildContext context, Category category, List<Meal> availableMeals) {
     final List<Meal> filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
