@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals/providers/auth_controller.dart';
-import 'package:meals/screens/signup.dart';
-import 'package:meals/screens/tabs.dart';
+import 'package:meals/controllers/auth_controller.dart';
+import 'package:meals/view/login.dart';
+import 'package:meals/view/tabs.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends ConsumerStatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
+    userNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
   }
 
-  void loginUser() async {
+  void signUpUser() async {
     final auth = ref.read(authProvider.notifier);
-    var res = await auth.loginUser(
+
+    String res = await auth.signUp(
         email: emailController.text, password: passwordController.text);
-    if (res != 'login successful') {
-      // print(res);
+
+    if (res != 'signup successful') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
     }
-    // var  userName = await _firestore.collection('user').doc(res[1]);
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => const TabsScreen()));
+        MaterialPageRoute(builder: (context) => const TabsScreen()));
   }
 
   @override
@@ -56,26 +58,55 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 // Heading
                 const Text(
-                  'Welcome back!',
+                  'Create account',
                   style: TextStyle(fontSize: 40),
                 ),
 
                 // Sub-Heading
-                const Text('Login to your account',
-                    style: TextStyle(fontSize: 16)),
+                const Text(
+                  'Create a new account',
+                  style: TextStyle(fontSize: 16),
+                ),
                 const SizedBox(height: 40),
 
                 // Username Text-box
-                const Text('Username / Email', style: TextStyle(fontSize: 20)),
+                const Text('Username'),
+                const SizedBox(height: 4),
+                TextField(
+                  controller: userNameController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Icon(Icons.person),
+                    ),
+                    hintText: 'Username',
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+
+                // Email text-box
+                const Text('Email'),
                 const SizedBox(height: 4),
                 TextField(
                   controller: emailController,
                   decoration: const InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(15.0),
-                      child: Icon(Icons.person),
+                      child: Icon(Icons.mail),
                     ),
-                    hintText: 'Username / Email',
+                    hintText: 'Email',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
@@ -93,11 +124,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 25),
 
                 // Password text-box
-                const Text('Password', style: TextStyle(fontSize: 20)),
+                const Text('Password'),
                 const SizedBox(height: 4),
                 TextField(
-                  obscureText: true,
                   controller: passwordController,
+                  obscureText: true,
                   decoration: const InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(15.0),
@@ -120,11 +151,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 40),
 
-                // Login Button
+                // Signup Button
                 SizedBox(
                   width: double.infinity,
                   child: InkWell(
-                    onTap: loginUser,
+                    onTap: signUpUser,
                     focusColor: Theme.of(context).colorScheme.primary,
                     highlightColor: Theme.of(context).colorScheme.primary,
                     customBorder: RoundedRectangleBorder(
@@ -141,8 +172,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 color: Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(15)),
                             child: const Center(
-                              child:
-                                  Text('Login', style: TextStyle(fontSize: 22)),
+                              child: Text('Sign up'),
                             ),
                           ),
                   ),
@@ -154,30 +184,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Don\'t have an account?'),
+                      const Text(
+                        'Already have an account?',
+                      ),
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignupScreen()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            padding: EdgeInsets.all(0),
-                            shadowColor: Colors.transparent),
-                        child: Text(
-                          'Signup',
-                          style:
-                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (ctx) => const LoginScreen()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              padding: const EdgeInsets.all(0),
+                              shadowColor: Colors.transparent),
+                          child: Text('Login',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
                                         .primary
                                         .withGreen(160),
-                                  ),
-                        ),
-                      )
+                                  )))
                     ],
                   ),
                 ),

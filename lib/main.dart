@@ -1,8 +1,9 @@
+// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meals/const.dart';
+import 'package:meals/routes/app_route_config.dart';
 import 'firebase_options.dart';
 // import 'package:meals/screens/tabs.dart';
 
@@ -26,11 +27,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      initialRoute: Routes.tabs,
-      routes: RouteMap.routes,
+      routeInformationParser: MyAppRoutes.returnRouter().routeInformationParser,
+      routerDelegate: MyAppRoutes.returnRouter().routerDelegate,
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );
   }

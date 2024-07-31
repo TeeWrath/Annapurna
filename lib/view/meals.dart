@@ -24,7 +24,7 @@ class MealsScreen extends StatelessWidget {
             Text(
               'Uh oh...Nothing here',
               style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
             const SizedBox(
@@ -33,7 +33,7 @@ class MealsScreen extends StatelessWidget {
             Text(
               'Try choosing different category',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
             )
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals/providers/auth_controller.dart';
-import 'package:meals/screens/login.dart';
+import 'package:meals/controllers/auth_controller.dart';
+import 'package:meals/view/login.dart';
 
 class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
