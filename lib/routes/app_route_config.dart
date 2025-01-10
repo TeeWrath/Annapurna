@@ -5,42 +5,49 @@ import 'package:meals/view/categories.dart';
 import 'package:meals/view/filters.dart';
 import 'package:meals/view/login.dart';
 import 'package:meals/view/signup.dart';
+import 'package:meals/view/splash.dart';
 import 'package:meals/view/tabs.dart';
 
 class MyAppRoutes {
   static GoRouter returnRouter() {
     GoRouter routes = GoRouter(routes: [
       GoRoute(
+          name: Routes.splash,
+          path: RoutePath.splash,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: SplashScreen());
+          }),
+      GoRoute(
         name: Routes.tabs,
-        path: '/',
+        path: RoutePath.tabs,
         pageBuilder: (context, state) {
           return const MaterialPage(child: TabsScreen());
         },
       ),
       GoRoute(
         name: Routes.login,
-        path: '/login',
+        path: RoutePath.login,
         pageBuilder: (context, state) {
           return const MaterialPage(child: LoginScreen());
         },
       ),
       GoRoute(
         name: Routes.signup,
-        path: '/signup',
+        path: RoutePath.signup,
         pageBuilder: (context, state) {
           return const MaterialPage(child: SignupScreen());
         },
       ),
       GoRoute(
         name: Routes.categories,
-        path: '/categories',
+        path: RoutePath.categories,
         pageBuilder: (context, state) {
           return const MaterialPage(child: CategoriesScreen());
         },
       ),
       GoRoute(
         name: Routes.filters,
-        path: '/filters',
+        path: RoutePath.filters,
         pageBuilder: (context, state) {
           return const MaterialPage(child: FiltersScreen());
         },

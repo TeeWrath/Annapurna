@@ -23,7 +23,6 @@ class MainDrawer extends ConsumerWidget {
                   Theme.of(context)
                       .colorScheme
                       .primaryContainer
-                      .withOpacity(0.8)
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

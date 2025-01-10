@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals/routes/app_route_const.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meals/view/categories.dart';
+import 'package:meals/view/filters.dart';
 // import 'package:meals/screens/filters.dart';
 import 'package:meals/view/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
@@ -34,7 +36,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      await Navigator.pushNamed(context, Routes.filters);
+      context.push(RoutePath.filters);
     }
   }
 
