@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
+import 'package:meals/core/routes/app_route_const.dart';
 import 'package:meals/view/login.dart';
 
 class MainDrawer extends ConsumerWidget {
@@ -87,8 +89,7 @@ class MainDrawer extends ConsumerWidget {
             child: TextButton.icon(
                 onPressed: () async {
                   auth.logOut();
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => const LoginScreen()));
+                  context.go(RoutePath.login);
                 },
                 icon: const Icon(
                   Icons.logout_rounded,

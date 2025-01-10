@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthController extends StateNotifier<bool> {
@@ -8,26 +9,6 @@ class AuthController extends StateNotifier<bool> {
   void setLoading(bool load) {
     state = load;
   }
-
-  // Future<bool> checkIfRegistered(String email) async {
-  //   bool res = false;
-  //   try {
-  //     if (email.isNotEmpty) {
-  //       await auth.;
-  //     }
-  //   } catch (e) {}
-  // }
-
-  // Future<bool> sendOtp(String number) async {
-  //   bool res = false;
-  //   try{
-  //     if(number.isNotEmpty){
-  //       await auth.verifyPhoneNumber(verificationCompleted: verificationCompleted, verificationFailed: verificationFailed, codeSent: codeSent, codeAutoRetrievalTimeout: codeAutoRetrievalTimeout)
-  //     }
-  //   }catch(e){
-  //       debugPrint('$e');
-  //     }
-  // }
 
   Future<String> signUp(
       {required String email, required String password}) async {
@@ -44,6 +25,8 @@ class AuthController extends StateNotifier<bool> {
         res = 'The email is badly formatted.';
       } else if (err.code == 'weak-password') {
         res = 'The password should be at least 6 characters';
+      } else if (err is PlatformException) {
+        if (err.code == 'ERROR_EMAIL_ALREADY_IN_USE') res = err.toString();
       }
     } catch (e) {
       res = e.toString();

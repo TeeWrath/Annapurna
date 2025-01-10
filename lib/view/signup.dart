@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
-import 'package:meals/view/login.dart';
-import 'package:meals/view/tabs.dart';
+import 'package:meals/core/routes/app_route_const.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -33,9 +33,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (res != 'signup successful') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
+    } else if (res == 'ERROR_EMAIL_ALREADY_IN_USE') {
+      context.go(RoutePath.login);
+      return;
     }
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const TabsScreen()));
+    context.go(RoutePath.tabs);
   }
 
   @override
@@ -189,9 +191,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (ctx) => const LoginScreen()));
+                            context.go(RoutePath.login);
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,

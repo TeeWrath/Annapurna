@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
-import 'package:meals/view/signup.dart';
+import 'package:meals/core/routes/app_route_const.dart';
 import 'package:meals/view/tabs.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -27,11 +28,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     var res = await auth.loginUser(
         email: emailController.text, password: passwordController.text);
     if (res != 'login successful') {
-      // print(res);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
     }
-    // var  userName = await _firestore.collection('user').doc(res[1]);
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (ctx) => const TabsScreen()));
   }
@@ -157,11 +156,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       const Text('Don\'t have an account?'),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignupScreen()),
-                          );
+                          context.go(RoutePath.signup);
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
