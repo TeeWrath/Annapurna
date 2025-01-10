@@ -1,20 +1,13 @@
 // ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:meals/routes/app_route_config.dart';
+import 'package:meals/core/theme/app_theme.dart';
+import 'package:meals/core/routes/app_route_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'firebase_options.dart';
-// import 'package:meals/screens/tabs.dart';
-
-final theme = ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: const Color.fromARGB(255, 241, 101, 41),
-  ),
-  textTheme: GoogleFonts.latoTextTheme(),
-);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +20,23 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: theme,
-      routerConfig: MyAppRoutes.returnRouter(),
-      // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
+    return ScreenUtilInit(
+      designSize: const Size(844, 390),
+      minTextAdapt: true,
+      child: PlatformProvider(
+          builder: (ctx) => PlatformTheme(
+              materialLightTheme: AppTheme.light(),
+              cupertinoLightTheme: AppTheme.cupLight(),
+              builder: (ctx) => PlatformApp.router(
+                    localizationsDelegates: const <LocalizationsDelegate<
+                        dynamic>>[
+                      DefaultMaterialLocalizations.delegate,
+                      DefaultCupertinoLocalizations.delegate,
+                      DefaultWidgetsLocalizations.delegate
+                    ],
+                    debugShowCheckedModeBanner: false,
+                    routerConfig: MyAppRoutes.returnRouter(),
+                  ))),
     );
   }
 }

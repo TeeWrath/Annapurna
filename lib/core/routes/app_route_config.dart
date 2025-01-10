@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meals/routes/app_route_const.dart';
+import 'package:meals/core/routes/app_route_const.dart';
 import 'package:meals/view/categories.dart';
 import 'package:meals/view/filters.dart';
 import 'package:meals/view/login.dart';

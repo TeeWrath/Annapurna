@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meals/routes/app_route_const.dart';
+import 'package:meals/core/routes/app_route_const.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/view/categories.dart';
-import 'package:meals/view/filters.dart';
-// import 'package:meals/screens/filters.dart';
 import 'package:meals/view/meals.dart';
-import 'package:meals/widgets/main_drawer.dart';
+import 'package:meals/core/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/controllers/favorites_provider.dart';
 import 'package:meals/controllers/filters_provider.dart';
