@@ -22,16 +22,15 @@ void main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: theme,
-      routeInformationParser: MyAppRoutes.returnRouter().routeInformationParser,
-      routerDelegate: MyAppRoutes.returnRouter().routerDelegate,
+      routerConfig: MyAppRoutes.returnRouter(),
       // home: const MealsScreen(title: 'something hai', meal: dummyMeals),
     );
   }
