@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
 import 'package:meals/core/routes/app_route_const.dart';
-import 'package:meals/view/tabs.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -24,15 +24,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void loginUser() async {
-    final auth = ref.read(authProvider.notifier);
-    var res = await auth.loginUser(
-        email: emailController.text, password: passwordController.text);
-    if (res != 'login successful') {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
-      return;
-    }
-    context.go(RoutePath.tabs);
+  final auth = ref.read(authProvider.notifier);
+  final FirebaseFirestore core = FirebaseFirestore.instance;
+
+  // Attempt login
+  var res = await auth.loginUser(
+      email: emailController.text, password: passwordController.text);
+
+  if (res != 'login successful') {
+    // Show an error message if login fails
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+    return;
   }
+
+  try {
+    // Fetch the username from Firestore
+    String userId = auth.auth.currentUser!.uid; // Get the current user's UID
+    DocumentSnapshot userDoc = await core.collection('user').doc(userId).get();
+
+    // Check if the document exists and retrieve the username
+    if (userDoc.exists) {
+      String userName = userDoc.get('username'); // Fetch the 'username' field
+
+      // Navigate to the tabs screen with the username
+      context.go('${RoutePath.tabs}/$userName');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User data not found.')));
+    }
+  } catch (e) {
+    // Handle errors, e.g., Firestore connection issues
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching user data: $e')));
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

@@ -19,9 +19,10 @@ class MyAppRoutes {
           }),
       GoRoute(
         name: Routes.tabs,
-        path: RoutePath.tabs,
+        path: '${RoutePath.tabs}/:userName',
         pageBuilder: (context, state) {
-          return const MaterialPage(child: TabsScreen());
+          final userName = state.pathParameters['userName'] ?? '';
+          return MaterialPage(child: TabsScreen(userName: userName,));
         },
       ),
       GoRoute(

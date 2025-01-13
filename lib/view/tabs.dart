@@ -16,7 +16,9 @@ const kInitialFilters = {
 };
 
 class TabsScreen extends ConsumerStatefulWidget {
-  const TabsScreen({super.key});
+  const TabsScreen({super.key, required this.userName});
+
+  final String userName;
 
   @override
   ConsumerState<TabsScreen> createState() => _TabsScreenState();
@@ -59,6 +61,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       ),
       drawer: MainDrawer(
         onSelectScreen: _setScreen,
+        userName: widget.userName,
+        profileImage: null,
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(

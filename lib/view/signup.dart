@@ -28,13 +28,15 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final auth = ref.read(authProvider.notifier);
 
     String res = await auth.signUp(
-        email: emailController.text, password: passwordController.text);
+        userName: userNameController.text,
+        email: emailController.text,
+        password: passwordController.text);
 
     if (res != 'signup successful') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
     }
-    context.go(RoutePath.tabs);
+    context.go('${RoutePath.tabs}/:${userNameController.text}');
   }
 
   @override

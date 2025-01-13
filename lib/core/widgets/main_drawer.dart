@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
 import 'package:meals/core/routes/app_route_const.dart';
-import 'package:meals/view/login.dart';
 
 class MainDrawer extends ConsumerWidget {
-  const MainDrawer({super.key, required this.onSelectScreen});
+  const MainDrawer({
+    super.key,
+    required this.onSelectScreen,
+    required this.userName,
+    required this.profileImage
+  });
 
   final void Function(String identifier) onSelectScreen;
+  final String? userName;
+  final String? profileImage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,17 +29,20 @@ class MainDrawer extends ConsumerWidget {
                   gradient: LinearGradient(
                 colors: [
                   Theme.of(context).colorScheme.primaryContainer,
-                  Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
+                  Theme.of(context).colorScheme.primaryContainer
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )),
               child: Row(
                 children: [
+                  profileImage != null ?
+                  Image.asset(
+                    profileImage!,
+                    height: 20.h,
+                  ) :
                   Icon(
-                    Icons.fastfood,
+                    Icons.person,
                     size: 48,
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -40,7 +50,7 @@ class MainDrawer extends ConsumerWidget {
                     width: 18,
                   ),
                   Text(
-                    'Cooking Up!',
+                    userName != null ? userName! : 'User',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
