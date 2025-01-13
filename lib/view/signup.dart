@@ -33,9 +33,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (res != 'signup successful') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
-    } else if (res == 'ERROR_EMAIL_ALREADY_IN_USE') {
-      context.go(RoutePath.login);
-      return;
     }
     context.go(RoutePath.tabs);
   }

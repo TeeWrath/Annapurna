@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthController extends StateNotifier<bool> {
@@ -25,11 +24,7 @@ class AuthController extends StateNotifier<bool> {
         res = 'The email is badly formatted.';
       } else if (err.code == 'weak-password') {
         res = 'The password should be at least 6 characters';
-      } else if (err is PlatformException) {
-        if (err.code == 'ERROR_EMAIL_ALREADY_IN_USE') res = err.toString();
       }
-    } catch (e) {
-      res = e.toString();
     } finally {
       setLoading(false);
     }

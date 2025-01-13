@@ -31,8 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
       return;
     }
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => const TabsScreen()));
+    context.go(RoutePath.tabs);
   }
 
   @override
