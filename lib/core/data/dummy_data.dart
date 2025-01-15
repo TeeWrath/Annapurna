@@ -57,7 +57,7 @@ const availableCategories = [
   ),
 ];
 
-const dummyMeals = [
+var dummyMeals = [
   Meal(
     id: 'm1',
     categories: [
