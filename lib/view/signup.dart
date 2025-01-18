@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/core/routes/app_route_const.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
@@ -49,7 +50,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
         toolbarHeight: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(60.r),
         child: Align(
           alignment: Alignment.center,
           child: SingleChildScrollView(
@@ -58,99 +59,99 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Heading
-                const Text(
+                Text(
                   'Create account',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 100.sp),
                 ),
 
                 // Sub-Heading
-                const Text(
+                Text(
                   'Create a new account',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 40.sp),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 20.h),
 
                 // Username Text-box
                 const Text('Username'),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 TextField(
                   controller: userNameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(35.r),
                       child: Icon(Icons.person),
                     ),
                     hintText: 'Username',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 15.h),
 
                 // Email text-box
                 const Text('Email'),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(35.r),
                       child: Icon(Icons.mail),
                     ),
                     hintText: 'Email',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 15.h),
 
                 // Password text-box
                 const Text('Password'),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 TextField(
                   controller: passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(35.r),
                       child: Icon(Icons.lock_open_sharp),
                     ),
                     hintText: 'Password',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 15.h),
 
                 // Signup Button
                 SizedBox(
@@ -160,7 +161,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     focusColor: Theme.of(context).colorScheme.primary,
                     highlightColor: Theme.of(context).colorScheme.primary,
                     customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(35.r),
                     ),
                     child: isLoading
                         ? const Center(
@@ -168,10 +169,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           )
                         : Container(
                             width: double.infinity,
-                            height: 60,
+                            height: 25.h,
                             decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.primary,
-                                borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(35.r)),
                             child: const Center(
                               child: Text('Sign up'),
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/meal_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/core/routes/app_route_const.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -37,7 +38,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 241, 101, 41),
       body: Container(
-        margin: const EdgeInsets.all(20),
+        margin: EdgeInsets.all(20.r),
         child: Center(
             child: Image.asset(
           'assets/logo.png',
