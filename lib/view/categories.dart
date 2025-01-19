@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/controllers/filters_provider.dart';
 import 'package:meals/core/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
@@ -58,7 +59,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen>
     return AnimatedBuilder(
         animation: _animationController,
         child: GridView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(35.r), // 16
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 3 / 2,

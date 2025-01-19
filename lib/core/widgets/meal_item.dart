@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/view/meal_detail.dart';
 import 'package:meals/core/widgets/meal_item_trait.dart';
@@ -31,8 +32,8 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      margin: EdgeInsets.all(20.r), //8
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
@@ -47,7 +48,7 @@ class MealItem extends StatelessWidget {
                 placeholder: MemoryImage(kTransparentImage),
                 image: NetworkImage(meal.imageUrl),
                 fit: BoxFit.cover,
-                height: 200,
+                height: 75.h, //200
                 width: double.infinity,
               ),
             ),
@@ -58,7 +59,7 @@ class MealItem extends StatelessWidget {
                 child: Container(
                   color: Colors.black54,
                   padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                      EdgeInsets.symmetric(vertical: 2.h, horizontal: 20.w), // 6,44
                   child: Column(
                     children: [
                       Text(
@@ -68,13 +69,13 @@ class MealItem extends StatelessWidget {
                         softWrap: true,
                         overflow: TextOverflow
                             .ellipsis, // Text will have '...' in the end if it is too long
-                        style: const TextStyle(
-                            fontSize: 20,
+                        style: TextStyle(
+                            fontSize: 50.sp, //20
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      const SizedBox(
-                        height: 12,
+                      SizedBox(
+                        height: 5.h, //12
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -83,15 +84,15 @@ class MealItem extends StatelessWidget {
                               // we can easily use a row inside a row here without the expanded widget as we have used positioned widget which specifies the total space for child widget
                               icon: Icons.schedule,
                               label: '${meal.duration} min'),
-                          const SizedBox(
-                            width: 12,
+                          SizedBox(
+                            width: 5.w, //12
                           ),
                           MealItemTrait(
                               // we can easily use a row inside a row here without the expanded widget as we have used positioned widget which specifies the total space for child widget
                               icon: Icons.work,
                               label: complexityText),
-                          const SizedBox(
-                            width: 12,
+                          SizedBox(
+                            width: 5.w,
                           ),
                           MealItemTrait(
                               // we can easily use a row inside a row here without the expanded widget as we have used positioned widget which specifies the total space for child widget

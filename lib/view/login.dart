@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/controllers/auth_controller.dart';
 import 'package:meals/core/routes/app_route_const.dart';
@@ -24,41 +25,41 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void loginUser() async {
-  final auth = ref.read(authProvider.notifier);
-  final FirebaseFirestore core = FirebaseFirestore.instance;
+    final auth = ref.read(authProvider.notifier);
+    final FirebaseFirestore core = FirebaseFirestore.instance;
 
-  // Attempt login
-  var res = await auth.loginUser(
-      email: emailController.text, password: passwordController.text);
+    // Attempt login
+    var res = await auth.loginUser(
+        email: emailController.text, password: passwordController.text);
 
-  if (res != 'login successful') {
-    // Show an error message if login fails
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
-    return;
-  }
-
-  try {
-    // Fetch the username from Firestore
-    String userId = auth.auth.currentUser!.uid; // Get the current user's UID
-    DocumentSnapshot userDoc = await core.collection('user').doc(userId).get();
-
-    // Check if the document exists and retrieve the username
-    if (userDoc.exists) {
-      String userName = userDoc.get('username'); // Fetch the 'username' field
-
-      // Navigate to the tabs screen with the username
-      context.go('${RoutePath.tabs}/$userName');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User data not found.')));
+    if (res != 'login successful') {
+      // Show an error message if login fails
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+      return;
     }
-  } catch (e) {
-    // Handle errors, e.g., Firestore connection issues
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching user data: $e')));
-  }
-}
 
+    try {
+      // Fetch the username from Firestore
+      String userId = auth.auth.currentUser!.uid; // Get the current user's UID
+      DocumentSnapshot userDoc =
+          await core.collection('user').doc(userId).get();
+
+      // Check if the document exists and retrieve the username
+      if (userDoc.exists) {
+        String userName = userDoc.get('username'); // Fetch the 'username' field
+
+        // Navigate to the tabs screen with the username
+        context.go('${RoutePath.tabs}/$userName');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('User data not found.')));
+      }
+    } catch (e) {
+      // Handle errors, e.g., Firestore connection issues
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error fetching user data: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         toolbarHeight: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(65.r),
         child: Align(
           alignment: Alignment.center,
           child: SingleChildScrollView(
@@ -79,70 +80,70 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Heading
-                const Text(
+                Text(
                   'Welcome back!',
-                  style: TextStyle(fontSize: 40),
+                  style: TextStyle(fontSize: 90.sp),
                 ),
 
                 // Sub-Heading
-                const Text('Login to your account',
-                    style: TextStyle(fontSize: 16)),
-                const SizedBox(height: 40),
+                Text('Login to your account',
+                    style: TextStyle(fontSize: 35.sp)),
+                SizedBox(height: 15.h),
 
                 // Username Text-box
-                const Text('Username / Email', style: TextStyle(fontSize: 20)),
-                const SizedBox(height: 4),
+                Text('Username / Email', style: TextStyle(fontSize: 45.sp)),
+                SizedBox(height: 1.5.h),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(30.r),
                       child: Icon(Icons.person),
                     ),
                     hintText: 'Username / Email',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(30.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(30.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 10.h),
 
                 // Password text-box
-                const Text('Password', style: TextStyle(fontSize: 20)),
-                const SizedBox(height: 4),
+                Text('Password', style: TextStyle(fontSize: 45.sp)),
+                SizedBox(height: 1.5.h),
                 TextField(
                   obscureText: true,
                   controller: passwordController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(35.r),
                       child: Icon(Icons.lock_open_sharp),
                     ),
                     hintText: 'Password',
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      borderRadius: BorderRadius.all(Radius.circular(35.r)),
                       borderSide: BorderSide(
                           color: Color.fromARGB(63, 0, 0, 0), width: 1.5),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                SizedBox(height: 15.h),
 
                 // Login Button
                 SizedBox(
@@ -152,7 +153,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     focusColor: Theme.of(context).colorScheme.primary,
                     highlightColor: Theme.of(context).colorScheme.primary,
                     customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(35.r),
                     ),
                     child: isLoading
                         ? const Center(
@@ -160,19 +161,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           )
                         : Container(
                             width: double.infinity,
-                            height: 60,
+                            height: 25.h,
                             decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.primary,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: const Center(
-                              child:
-                                  Text('Login', style: TextStyle(fontSize: 22)),
+                                borderRadius: BorderRadius.circular(35.r)),
+                            child: Center(
+                              child: Text('Login',
+                                  style: TextStyle(fontSize: 42.sp)),
                             ),
                           ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: 3.h,
                 ),
                 Center(
                   child: Row(

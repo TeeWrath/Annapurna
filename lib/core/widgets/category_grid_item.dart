@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/models/category.dart';
 
 class CategoryGridItem extends StatelessWidget {
@@ -13,15 +14,15 @@ class CategoryGridItem extends StatelessWidget {
     return InkWell(
       onTap: onSelectCategory,
       splashColor: Theme.of(context).primaryColor,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(35.r), //16
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding:  EdgeInsets.all(35.r), // 16
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(35.r), // 16
           gradient: LinearGradient(
             colors: [
-              category.color.withOpacity(0.55),
-              category.color.withOpacity(0.9),
+              category.color.withValues(alpha: 0.55),
+              category.color.withValues(alpha: 0.9),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -32,7 +33,7 @@ class CategoryGridItem extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleLarge!
-              .copyWith(color: Theme.of(context).colorScheme.onBackground),
+              .copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
       ),
     );

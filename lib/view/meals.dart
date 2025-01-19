@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/core/widgets/meal_item.dart';
 
@@ -27,8 +28,8 @@ class MealsScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
             ),
-            const SizedBox(
-              height: 16,
+            SizedBox(
+              height: 8.h, //16
             ),
             Text(
               'Try choosing different category',

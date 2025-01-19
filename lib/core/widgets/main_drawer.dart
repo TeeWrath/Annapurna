@@ -24,7 +24,7 @@ class MainDrawer extends ConsumerWidget {
       child: Column(
         children: [
           DrawerHeader(
-              padding: const EdgeInsetsDirectional.all(20),
+              padding: EdgeInsetsDirectional.all(40.r), //20
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 colors: [
@@ -43,11 +43,11 @@ class MainDrawer extends ConsumerWidget {
                   ) :
                   Icon(
                     Icons.person,
-                    size: 48,
+                    size: 48, // 48
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  const SizedBox(
-                    width: 18,
+                  SizedBox(
+                    width: 5.h, // 18
                   ),
                   Text(
                     userName != null ? userName! : 'User',
@@ -67,7 +67,7 @@ class MainDrawer extends ConsumerWidget {
               'Meals',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 24,
+                    fontSize: 50.sp,//24
                   ),
             ),
             onTap: () {
@@ -84,7 +84,7 @@ class MainDrawer extends ConsumerWidget {
               'Filters',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 24,
+                    fontSize: 50.sp, // 24
                   ),
             ),
             onTap: () {

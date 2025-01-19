@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals/models/meal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/controllers/favorites_provider.dart';
@@ -51,13 +52,13 @@ class MealDetailScreen extends ConsumerWidget {
                 tag: meal.id,
                 child: Image.network(
                   meal.imageUrl,
-                  height: 300,
+                  height: 50.h, //300
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(
-                height: 14,
+              SizedBox(
+                height: 6.h, //14
               ),
               Text(
                 'Ingredients',
@@ -65,8 +66,8 @@ class MealDetailScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: 5.h, // 8
               ),
               for (final ingredient in meal.ingredients)
                 Text(
@@ -76,8 +77,8 @@ class MealDetailScreen extends ConsumerWidget {
                       .bodyMedium!
                       .copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
-              const SizedBox(
-                height: 14,
+              SizedBox(
+                height: 6.h, // 14
               ),
               Text(
                 'Steps',
@@ -85,13 +86,13 @@ class MealDetailScreen extends ConsumerWidget {
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 8,
+              SizedBox(
+                height: 5.h, //8
               ),
               for (final step in meal.steps)
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      EdgeInsets.symmetric(horizontal: 5.h, vertical: 5.w), // 12 each
                   child: Text(
                     step,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
