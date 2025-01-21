@@ -1,7 +1,6 @@
-# Meals App - Flutter
+# Annapurna
 A flutter application that gives you food options, somewhat like Food delivery apps. <br>
-Created while learning State Management Libray - Riverpod <br>
-and to learn flutter animations
+This uses firebase auth, firebase cloud storage and riverpod state management.
 
 
 # Build Instructions
