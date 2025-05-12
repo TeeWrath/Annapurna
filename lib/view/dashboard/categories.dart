@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meals/controllers/filters_provider.dart';
+import 'package:meals/providers/filters_provider.dart';
 import 'package:meals/core/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
 import 'package:meals/models/meal.dart';
-import 'package:meals/view/meals.dart';
+import 'package:meals/view/meal/meals.dart';
 import 'package:meals/core/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends ConsumerStatefulWidget {

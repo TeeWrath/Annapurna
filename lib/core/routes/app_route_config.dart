@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meals/core/routes/app_route_const.dart';
-import 'package:meals/view/categories.dart';
-import 'package:meals/view/filters.dart';
-import 'package:meals/view/login.dart';
-import 'package:meals/view/signup.dart';
-import 'package:meals/view/splash.dart';
-import 'package:meals/view/tabs.dart';
+import 'package:meals/view/dashboard/categories.dart';
+import 'package:meals/view/settings/filters.dart';
+import 'package:meals/view/auth/login.dart';
+import 'package:meals/view/auth/signup.dart';
+import 'package:meals/view/auth/splash.dart';
+import 'package:meals/view/dashboard/tabs.dart';
 
 class MyAppRoutes {
   static GoRouter returnRouter() {
