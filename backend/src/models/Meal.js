@@ -69,7 +69,10 @@ const mealSchema = new mongoose.Schema({
 });
 
 // Add index for better query performance
-mealSchema.index({ title: 'text', categories: 1 });
+// mealSchema.index({ title: 'text'});
+// mealSchema.index({ categories: 1 });
+// mealSchema.index({ affordability: 1 });
+// mealSchema.index({ complexity: 1 });
 
 const Meal = mongoose.model("Meal", mealSchema);
 
