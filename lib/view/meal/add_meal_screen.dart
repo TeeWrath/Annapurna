@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/providers/meal_provider.dart';
 import 'package:meals/providers/categories_provider.dart';
@@ -18,11 +19,11 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
   final _durationController = TextEditingController();
   final _ingredientController = TextEditingController();
   final _stepController = TextEditingController();
-  
+
   final List<String> _selectedCategories = [];
   final List<String> _ingredients = [];
   final List<String> _steps = [];
-  
+
   bool _isGlutenFree = false;
   bool _isLactoseFree = false;
   bool _isVegetarian = false;
@@ -117,13 +118,16 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
     );
 
     final success = await ref.read(mealProvider.notifier).addMeal(newMeal);
-    
+
     setState(() {
       _isLoading = false;
     });
 
+    // In your _submitMeal method, when success is true:
     if (success) {
-      Navigator.of(context).pop(true);
+      if (context.mounted) {
+        context.pop(true); // Use context.pop instead of Navigator.pop
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to add meal. Please try again.')),
@@ -165,7 +169,8 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                   children: [
                     TextFormField(
                       controller: _titleController,
-                      decoration: const InputDecoration(labelText: 'Meal Title'),
+                      decoration:
+                          const InputDecoration(labelText: 'Meal Title'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a title';
@@ -185,7 +190,8 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                     ),
                     TextFormField(
                       controller: _durationController,
-                      decoration: const InputDecoration(labelText: 'Duration (minutes)'),
+                      decoration: const InputDecoration(
+                          labelText: 'Duration (minutes)'),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -197,10 +203,12 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                         return null;
                       },
                     ),
-                    
+
                     // Complexity Selection
                     const SizedBox(height: 16),
-                    const Text('Complexity', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Complexity',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     DropdownButtonFormField<Complexity>(
                       value: _complexity,
                       onChanged: (Complexity? newValue) {
@@ -219,13 +227,16 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                       }).toList(),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       ),
                     ),
-                    
+
                     // Affordability Selection
                     const SizedBox(height: 16),
-                    const Text('Affordability', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Affordability',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     DropdownButtonFormField<Affordability>(
                       value: _affordability,
                       onChanged: (Affordability? newValue) {
@@ -233,7 +244,8 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                           _affordability = newValue!;
                         });
                       },
-                      items: Affordability.values.map((Affordability affordability) {
+                      items: Affordability.values
+                          .map((Affordability affordability) {
                         return DropdownMenuItem<Affordability>(
                           value: affordability,
                           child: Text(
@@ -244,18 +256,22 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                       }).toList(),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       ),
                     ),
-                    
+
                     // Categories Selection
                     const SizedBox(height: 16),
-                    const Text('Categories', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Categories',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
                       children: allCategories.map((category) {
-                        final isSelected = _selectedCategories.contains(category.id);
+                        final isSelected =
+                            _selectedCategories.contains(category.id);
                         return FilterChip(
                           label: Text(category.title),
                           selected: isSelected,
@@ -264,16 +280,22 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                           selectedColor: category.color.withOpacity(0.3),
                           checkmarkColor: category.color,
                           labelStyle: TextStyle(
-                            color: isSelected ? category.color : Theme.of(context).colorScheme.onSurface,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            color: isSelected
+                                ? category.color
+                                : Theme.of(context).colorScheme.onSurface,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         );
                       }).toList(),
                     ),
-                    
+
                     // Dietary Preferences
                     const SizedBox(height: 16),
-                    const Text('Dietary Preferences', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Dietary Preferences',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
@@ -281,29 +303,35 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                         FilterChip(
                           label: const Text('Gluten Free'),
                           selected: _isGlutenFree,
-                          onSelected: (value) => setState(() => _isGlutenFree = value),
+                          onSelected: (value) =>
+                              setState(() => _isGlutenFree = value),
                         ),
                         FilterChip(
                           label: const Text('Lactose Free'),
                           selected: _isLactoseFree,
-                          onSelected: (value) => setState(() => _isLactoseFree = value),
+                          onSelected: (value) =>
+                              setState(() => _isLactoseFree = value),
                         ),
                         FilterChip(
                           label: const Text('Vegetarian'),
                           selected: _isVegetarian,
-                          onSelected: (value) => setState(() => _isVegetarian = value),
+                          onSelected: (value) =>
+                              setState(() => _isVegetarian = value),
                         ),
                         FilterChip(
                           label: const Text('Vegan'),
                           selected: _isVegan,
-                          onSelected: (value) => setState(() => _isVegan = value),
+                          onSelected: (value) =>
+                              setState(() => _isVegan = value),
                         ),
                       ],
                     ),
-                    
+
                     // Ingredients
                     const SizedBox(height: 16),
-                    const Text('Ingredients', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Ingredients',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     Row(
                       children: [
                         Expanded(
@@ -335,10 +363,12 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                         ),
                       );
                     }),
-                    
+
                     // Steps
                     const SizedBox(height: 16),
-                    const Text('Steps', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const Text('Steps',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                     Row(
                       children: [
                         Expanded(
@@ -364,7 +394,8 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                         margin: const EdgeInsets.symmetric(vertical: 4),
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             foregroundColor: Colors.white,
                             child: Text('${index + 1}'),
                           ),
@@ -376,7 +407,7 @@ class _AddMealScreenState extends ConsumerState<AddMealScreen> {
                         ),
                       );
                     }),
-                    
+
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _submitMeal,

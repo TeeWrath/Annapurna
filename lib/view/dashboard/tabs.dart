@@ -28,13 +28,12 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   }
 
   void _setScreen(String identifier) async {
-    Navigator.of(context).pop();
+    // Use context.go or context.push instead of Navigator.pop/push
     if (identifier == 'filters') {
       context.push(RoutePath.filters);
     } else if (identifier == 'add_meal') {
-      final result = await Navigator.of(context).push(
-        MaterialPageRoute(builder: (ctx) => const AddMealScreen()),
-      );
+      // For screens that need to return results, use push and handle the result
+      final result = await context.push<bool?>(RoutePath.addMeal);
       if (result == true) {
         // Refresh meals if a new meal was added
         ref.read(mealProvider.notifier).getMeals();
