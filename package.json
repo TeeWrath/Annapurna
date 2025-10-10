@@ -1,0 +1,25 @@
+{
+  "name": "annapurna",
+  "version": "1.0.0",
+  "description": "A flutter application that gives you food options, somewhat like Food delivery apps. <br> This uses firebase auth, firebase cloud storage and riverpod state management.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "npm install --prefix backend",
+    "start": "npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeeWrath/Annapurna.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeeWrath/Annapurna/issues"
+  },
+  "homepage": "https://github.com/TeeWrath/Annapurna#readme"
+}
