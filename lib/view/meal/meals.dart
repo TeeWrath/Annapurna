@@ -4,20 +4,20 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/core/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, this.title, required this.meal});
+  const MealsScreen({super.key, this.title, required this.meals});
 
   final String? title;
-  final List<Meal> meal;
+  final List<Meal> meals;
 
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
-        itemCount: meal.length,
+        itemCount: meals.length,
         itemBuilder: (ctx, index) => MealItem(
-              meal: meal[index],
+              meal: meals[index],
             ));
 
-    if (meal.isEmpty) {
+    if (meals.isEmpty) {
       content = Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -10,9 +10,7 @@ class MealDetailScreen extends ConsumerWidget {
   final Meal meal;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteMeals = ref.watch(favoriteMealsProvider);
-
-    final isFavorite = favoriteMeals.contains(meal);
+    final isFavorite = ref.watch(isMealFavoriteProvider(meal.id));
 
     return Scaffold(
         appBar: AppBar(
@@ -52,13 +50,19 @@ class MealDetailScreen extends ConsumerWidget {
                 tag: meal.id,
                 child: Image.network(
                   meal.imageUrl,
-                  height: 50.h, //300
+                  height: 300.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 300.h,
+                    width: double.infinity,
+                    color: Colors.grey[300],
+                    child: Icon(Icons.fastfood, size: 50.sp),
+                  ),
                 ),
               ),
               SizedBox(
-                height: 6.h, //14
+                height: 14.h,
               ),
               Text(
                 'Ingredients',
@@ -67,7 +71,7 @@ class MealDetailScreen extends ConsumerWidget {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 5.h, // 8
+                height: 8.h,
               ),
               for (final ingredient in meal.ingredients)
                 Text(
@@ -78,7 +82,7 @@ class MealDetailScreen extends ConsumerWidget {
                       .copyWith(color: Theme.of(context).colorScheme.onSurface),
                 ),
               SizedBox(
-                height: 6.h, // 14
+                height: 14.h,
               ),
               Text(
                 'Steps',
@@ -87,12 +91,12 @@ class MealDetailScreen extends ConsumerWidget {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                height: 5.h, //8
+                height: 8.h,
               ),
               for (final step in meal.steps)
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 5.h, vertical: 5.w), // 12 each
+                      EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.w),
                   child: Text(
                     step,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:meals/core/routes/app_route_const.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meals/providers/meal_provider.dart';
 import 'package:meals/view/dashboard/categories.dart';
 import 'package:meals/view/meal/meals.dart';
 import 'package:meals/core/widgets/drawers/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/favorites_provider.dart';
-import 'package:meals/providers/filters_provider.dart';
-
-const kInitialFilters = {
-  Filter.glutenFree: false,
-  Filter.lactoseFree: false,
-  Filter.vegetarian: false,
-  Filter.vegan: false
-};
+import 'package:meals/view/meal/add_meal_screen.dart';
 
 class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key, required this.userName});
@@ -37,27 +31,41 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
       context.push(RoutePath.filters);
+    } else if (identifier == 'add_meal') {
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (ctx) => const AddMealScreen()),
+      );
+      if (result == true) {
+        // Refresh meals if a new meal was added
+        ref.read(mealProvider.notifier).getMeals();
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // listening to the provider
-    // final availableMeals = ref.watch(filteredMealsProvider);
-
     Widget activePage = const CategoriesScreen();
     String activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       final favoriteMeals = ref.watch(favoriteMealsProvider);
       activePage = MealsScreen(
-        meal: favoriteMeals,
+        meals: favoriteMeals,
       );
       activePageTitle = 'Your Favorites';
     }
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(activePageTitle),
+        actions: [
+          if (_selectedPageIndex == 0) // Only show on Categories tab
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => _setScreen('add_meal'),
+              tooltip: 'Add New Meal',
+            ),
+        ],
       ),
       drawer: MainDrawer(
         onSelectScreen: _setScreen,
