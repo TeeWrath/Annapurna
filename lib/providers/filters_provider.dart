@@ -1,3 +1,4 @@
+// providers/filters_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:meals/models/meal.dart';
@@ -40,12 +41,16 @@ final filtersProvider =
 final filteredMealsProvider = Provider<List<Meal>>((ref) {
   final meals = ref.watch(mealProvider);
   final activeFilters = ref.watch(filtersProvider);
+  
+  print("Total meals fetched: ${meals.length}");
+  print("Active filters: $activeFilters");
 
   if (meals.isEmpty) {
+    print("No meals available for filtering");
     return [];
   }
 
-  return meals.where((meal) {
+  final filteredMeals = meals.where((meal) {
     if (activeFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
       return false;
     }
@@ -60,6 +65,9 @@ final filteredMealsProvider = Provider<List<Meal>>((ref) {
     }
     return true;
   }).toList();
+
+  print("Filtered meals count: ${filteredMeals.length}");
+  return filteredMeals;
 });
 
 // Provider to check if any filters are active

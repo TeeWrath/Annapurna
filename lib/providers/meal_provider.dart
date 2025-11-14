@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:meals/models/meal.dart';
 
 class MealsNotifier extends StateNotifier<List<Meal>> {
-  MealsNotifier() : super([]);
+  MealsNotifier() : super([]) {
+    getMeals();
+  }
 
   static const String baseUrl = 'https://annapurna-fpy6.onrender.com/api';
 
@@ -14,7 +16,7 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
     final url = Uri.parse('$baseUrl/meals');
     try {
       final response = await http.get(url);
-      
+
       if (response.statusCode == 200) {
         if (response.body.isEmpty || response.body == 'null') {
           state = [];
@@ -23,7 +25,8 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
 
         // Decode the JSON response as a List
         final List<dynamic> mealsData = json.decode(response.body);
-        
+         print('Raw API response: ${response.body}');
+
         // Convert the List into a list of Meal objects
         final List<Meal> mealList = mealsData.map((mealData) {
           return Meal.fromJson(mealData as Map<String, dynamic>);
@@ -32,7 +35,8 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
         state = mealList;
         return mealList;
       } else {
-        print('Error fetching meals: ${response.statusCode} - ${response.body}');
+        print(
+            'Error fetching meals: ${response.statusCode} - ${response.body}');
         return [];
       }
     } catch (e) {
@@ -46,7 +50,7 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
     final url = Uri.parse('$baseUrl/meals/$id');
     try {
       final response = await http.get(url);
-      
+
       if (response.statusCode == 200) {
         if (response.body.isEmpty || response.body == 'null') {
           return null;
@@ -54,7 +58,8 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
         final Map<String, dynamic> mealData = json.decode(response.body);
         return Meal.fromJson(mealData);
       } else {
-        print('Error fetching meal $id: ${response.statusCode} - ${response.body}');
+        print(
+            'Error fetching meal $id: ${response.statusCode} - ${response.body}');
         return null;
       }
     } catch (e) {
@@ -72,7 +77,7 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
         headers: {'Content-Type': 'application/json'},
         body: json.encode(meal.toJson()),
       );
-      
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         await getMeals(); // Refresh the list
         return true;
@@ -95,12 +100,13 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
         headers: {'Content-Type': 'application/json'},
         body: json.encode(meal.toJson()),
       );
-      
+
       if (response.statusCode == 200) {
         await getMeals(); // Refresh the list
         return true;
       } else {
-        print('Error updating meal $id: ${response.statusCode} - ${response.body}');
+        print(
+            'Error updating meal $id: ${response.statusCode} - ${response.body}');
         return false;
       }
     } catch (e) {
@@ -114,12 +120,13 @@ class MealsNotifier extends StateNotifier<List<Meal>> {
     final url = Uri.parse('$baseUrl/meals/$id');
     try {
       final response = await http.delete(url);
-      
+
       if (response.statusCode == 200) {
         state = state.where((meal) => meal.id != id).toList();
         return true;
       } else {
-        print('Error deleting meal $id: ${response.statusCode} - ${response.body}');
+        print(
+            'Error deleting meal $id: ${response.statusCode} - ${response.body}');
         return false;
       }
     } catch (e) {

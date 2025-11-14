@@ -1,3 +1,6 @@
+// models/meal.dart
+import 'package:flutter/material.dart';
+
 enum Complexity {
   simple,
   challenging,
@@ -42,26 +45,38 @@ class Meal {
   });
 
   factory Meal.fromJson(Map<String, dynamic> json) {
+    // Handle enum conversion safely
+    Affordability parseAffordability(String value) {
+      return Affordability.values.firstWhere(
+        (e) => e.toString().split('.').last == value,
+        orElse: () => Affordability.affordable,
+      );
+    }
+
+    Complexity parseComplexity(String value) {
+      return Complexity.values.firstWhere(
+        (e) => e.toString().split('.').last == value,
+        orElse: () => Complexity.simple,
+      );
+    }
+
     return Meal(
-      id: json['id'] as String,
-      categories: List<String>.from(json['categories']),
-      title: json['title'] as String,
-      affordability: Affordability.values
-          .firstWhere((e) => e.toString().split('.').last == json['affordability']),
-      complexity: Complexity.values
-          .firstWhere((e) => e.toString().split('.').last == json['complexity']),
-      imageUrl: json['imageUrl'] as String,
-      duration: json['duration'] as int,
-      ingredients: List<String>.from(json['ingredients']),
-      steps: List<String>.from(json['steps']),
-      isGlutenFree: json['isGlutenFree'] as bool,
-      isVegan: json['isVegan'] as bool,
-      isVegetarian: json['isVegetarian'] as bool,
-      isLactoseFree: json['isLactoseFree'] as bool,
+      id: json['id'] as String? ?? '',
+      categories: List<String>.from(json['categories'] ?? []),
+      title: json['title'] as String? ?? '',
+      affordability: parseAffordability(json['affordability'] as String? ?? 'affordable'),
+      complexity: parseComplexity(json['complexity'] as String? ?? 'simple'),
+      imageUrl: json['imageUrl'] as String? ?? '',
+      duration: (json['duration'] as num?)?.toInt() ?? 0,
+      ingredients: List<String>.from(json['ingredients'] ?? []),
+      steps: List<String>.from(json['steps'] ?? []),
+      isGlutenFree: json['isGlutenFree'] as bool? ?? false,
+      isVegan: json['isVegan'] as bool? ?? false,
+      isVegetarian: json['isVegetarian'] as bool? ?? false,
+      isLactoseFree: json['isLactoseFree'] as bool? ?? false,
     );
   }
 
-  // Add toJson method for completeness
   Map<String, dynamic> toJson() {
     return {
       'id': id,
